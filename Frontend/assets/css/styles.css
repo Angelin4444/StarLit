@@ -1,0 +1,1970 @@
+/*=============== GOOGLE FONTS ===============*/
+/* Import Google Fonts for professional typography */
+@import url("https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@500&family=Montserrat:wght@400;500;600&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+/* CSS Custom Properties for consistent theming across the site */
+:root {
+  --header-height: 3.5rem; /* Fixed height for navigation header */
+
+  /*========== Colors (HSL mode) ==========*/
+  /* Using HSL for easy theme manipulation */
+  --first-color: hsl(230, 62%, 56%); /* Primary brand color (blue) */
+  --title-color: hsl(230, 70%, 16%); /* Dark color for headings */
+  --text-color: hsl(230, 16%, 45%); /* Medium gray for body text */
+  --border-color: hsl(230, 50%, 90%); /* Light gray for borders */
+  --white-color: hsl(0, 0%, 100%); /* Pure white */
+  --body-color: hsl(230, 100%, 96%); /* Light background color */
+  --container-color: hsl(230, 100%, 97%); /* Background for cards and containers */
+
+  /*========== Font and typography ==========*/
+  /* Font families and responsive font sizes */
+  --body-font: "Montserrat", sans-serif; /* Primary font for body text */
+  --second-font: "Montagu Slab", serif; /* Decorative font for titles */
+  --biggest-font-size: 2rem; /* Hero/main title size */
+  --h1-font-size: 1.5rem; /* H1 heading size */
+  --h2-font-size: 1.25rem; /* H2 heading size */
+  --h3-font-size: 1rem; /* H3 heading size */
+  --normal-font-size: .938rem; /* Base font size */
+  --small-font-size: .813rem; /* Small text */
+  --smaller-font-size: .75rem; /* Smallest text (captions, labels) */
+
+  /*========== Font weight ==========*/
+  /* Font weights for text hierarchy */
+  --font-regular: 400; /* Normal text */
+  --font-medium: 500; /* Medium emphasis */
+  --font-semi-bold: 600; /* Strong emphasis */
+
+  /*========== Layer depth (z-index) ==========*/
+  /* Z-index values for stacking context */
+  --z-tooltip: 10; /* Tooltips and small overlays */
+  --z-fixed: 100; /* Fixed elements like header and modals */
+}
+
+/*========== Responsive typography ==========*/
+/* Increase font sizes for desktop screens (1150px and above) */
+@media screen and (min-width: 1150px) {
+  :root {
+    --biggest-font-size: 3.5rem; /* Larger hero text on desktop */
+    --h1-font-size: 2.25rem; /* Larger H1 on desktop */
+    --h2-font-size: 1.5rem; /* Larger H2 on desktop */
+    --h3-font-size: 1.25rem; /* Larger H3 on desktop */
+    --normal-font-size: 1rem; /* Larger base font on desktop */
+    --small-font-size: .875rem; /* Larger small text on desktop */
+    --smaller-font-size: .813rem; /* Larger smallest text on desktop */
+  }
+}
+
+/*=============== LOADER ===============*/
+/* Full-screen loading animation displayed when page first loads */
+.loader {
+  position: fixed; /* Fixed positioning covers entire viewport */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--body-color); /* Match page background */
+  display: flex; /* Center content using flexbox */
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* Above all other content */
+  transition: opacity .6s, visibility .6s; /* Smooth fade out */
+}
+
+/* Container for loader animation and text */
+.loader__content {
+  text-align: center;
+}
+
+/* Animated book icon in the loader */
+.loader__book {
+  width: 60px;
+  height: 45px;
+  position: relative; /* For positioning child elements */
+  margin: 0 auto 1.5rem; /* Center and add bottom spacing */
+  border: 4px solid var(--first-color); /* Book cover outline */
+  border-radius: 4px; /* Slightly rounded corners */
+}
+
+/* Book spine - vertical line in center */
+.loader__book::before {
+  content: ""; /* Required for pseudo-element */
+  position: absolute;
+  top: 0;
+  left: 50%; /* Center horizontally */
+  width: 2px; /* Thin vertical line */
+  height: 100%;
+  background-color: var(--first-color); /* Match book color */
+  transform: translateX(-50%); /* Perfect centering */
+}
+
+/* Animated pages that flip */
+.loader__page {
+  position: absolute;
+  top: 0;
+  left: 50%; /* Start from center */
+  width: 50%; /* Half the book width */
+  height: 100%;
+  background-color: var(--body-color); /* Match background */
+  border: 1px solid var(--first-color); /* Page outline */
+  transform-origin: left; /* Flip from left edge */
+  animation: flip 2s infinite ease-in-out; /* Continuous flip animation */
+}
+
+/* Stagger animation for multiple pages */
+.loader__page:nth-child(2) {
+  animation-delay: 0.5s; /* Second page starts after 0.5s */
+}
+
+.loader__page:nth-child(3) {
+  animation-delay: 1s; /* Third page starts after 1s */
+}
+
+/* Brand text below the animated book */
+.loader__text {
+  font-family: var(--second-font); /* Decorative font */
+  font-size: var(--h1-font-size); /* Large text */
+  color: var(--first-color); /* Brand color */
+  font-weight: var(--font-medium);
+  letter-spacing: 2px; /* Spaced letters for elegance */
+  animation: pulse 1.5s infinite; /* Pulsing opacity effect */
+}
+
+/* Keyframes for page flip animation */
+@keyframes flip {
+  0% { transform: rotateY(0deg); } /* Start flat */
+  50% { transform: rotateY(-180deg); } /* Flip to back */
+  100% { transform: rotateY(0deg); } /* Return to front */
+}
+
+/* Keyframes for text pulse animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; } /* Fully visible */
+  50% { opacity: .5; } /* Half transparent */
+}
+
+/* Hide loader after page loads */
+.loader--hide {
+  opacity: 0; /* Fade out */
+  visibility: hidden; /* Remove from layout */
+}
+
+/*=============== BASE ===============*/
+/* Reset and base styles for consistent cross-browser rendering */
+* {
+  box-sizing: border-box; /* Include padding and border in element width/height */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margins */
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth; /* Smooth scrolling when clicking nav links */
+}
+
+/* Apply default font to body, inputs, and buttons */
+body,
+input,
+button {
+  font-family: var(--body-font); /* Consistent font across all text elements */
+  font-size: var(--normal-font-size); /* Base font size */
+}
+
+/* Body with animated gradient background */
+body {
+  background: linear-gradient(-45deg, var(--body-color), #e0e7ff, #f3f4f6, var(--container-color)); /* Multi-color gradient */
+  background-size: 400% 400%; /* Large size for smooth animation */
+  animation: gradientBG 15s ease infinite; /* Slow, continuous animation */
+  color: var(--text-color); /* Default text color */
+  transition: background-color .4s; /* Smooth transition for theme changes */
+}
+
+/* Keyframes for animated gradient background */
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; } /* Start position */
+  50% { background-position: 100% 50%; } /* Middle position */
+  100% { background-position: 0% 50%; } /* Return to start (seamless loop) */
+}
+
+/* Remove default styling from form elements */
+input,
+button {
+  border: none; /* Remove default borders */
+  outline: none; /* Remove default focus outline (custom focus styles applied later) */
+}
+
+/* Headings use decorative font and consistent color */
+h1, h2, h3, h4 {
+  color: var(--title-color); /* Dark color for prominence */
+  font-family: var(--second-font); /* Decorative serif font */
+  font-weight: var(--font-medium); /* Medium weight for elegance */
+}
+
+/* Remove default list styling */
+ul {
+  list-style: none; /* No bullets */
+}
+
+/* Remove default link styling */
+a {
+  text-decoration: none; /* No underline */
+}
+
+/* Responsive images */
+img {
+  display: block; /* Remove inline spacing */
+  max-width: 100%; /* Never exceed container width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/*=============== THEME ===============*/
+/*========== Variables Dark theme ==========*/
+body.dark-theme{
+  --title-color: hsl(230, 48%, 85%);
+  --text-color: hsl(230, 16%, 70%);
+  --border-color: hsl(230, 12%, 18%);
+  --body-color: hsl(230, 12%, 8%);
+  --container-color: hsl(230, 12%, 12%);
+  background: var(--body-color);
+  animation: none;
+}
+
+/*========== 
+	Color changes in some parts of 
+	the website, in dark theme
+==========*/
+.dark-theme .shadow-header{
+    box-shadow: 0 2px 16px hsla(0, 0%, 0%, .4);
+}
+
+.dark-theme .nav__menu{
+    box-shadow: 0 -8px 32px hsla(0, 0%, 0%, .4);
+}
+
+.dark-theme .scrollup{
+    box-shadow: 0 2px 8px hsla(0, 0%, 0%, .4);
+}
+
+.dark-theme .search,
+.dark-theme .login,
+.dark-theme .cart{
+    background-color: hsla(230, 12%, 8%, .6);
+}
+
+.dark-theme::-webkit-scrollbar{
+    background-color: hsl(230, 16%, 15%);
+}
+
+.dark-theme::-webkit-scrollbar-thumb{
+    background-color: hsl(230, 16%, 25%);
+}
+
+.dark-theme::-webkit-scrollbar-thumb:hover{
+    background-color: hsl(230, 16%, 35%);
+}
+/*=============== REUSABLE CSS CLASSES ===============*/
+.container {
+  max-width: 1220px;
+  margin-inline: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.section {
+  padding-block: 5rem 1rem;
+}
+
+.section__title {
+  text-align: center;
+  font-size: var(--h1-font-size);
+  font-family: var(--second-font);
+  margin-bottom: 2rem;
+}
+
+.main {
+  overflow: hidden; /* For animation ScrollReveal */
+}
+
+/*=============== HEADER & NAV ===============*/
+.header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--body-color);
+  z-index: var(--z-fixed);
+  transition: box-shadow .4s, background-color .4s;
+}
+
+.nav{
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav__logo{
+  display: inline-flex;
+  align-items: center;
+  column-gap: .5rem;
+  color: var(--first-color);
+  font-weight: var(--font-medium);
+}
+
+.nav__logo i{
+  font-size: 1.25rem;
+}
+
+/* Navigation for mobile devices */
+@media screen and (max-width:1150px){
+  .nav__menu{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background-color: var(--container-color);
+    box-shadow: 0 -8px 32px hsla(0, 0%, 0%, .1);
+    padding: 1.25rem 4rem;
+    transition: background-color .4s;
+  }
+}
+
+.nav__list{
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav__link{
+  color: var(--text-color);
+  transition: color .4s;
+}
+
+.nav__link span{
+  display: none;
+}
+
+.nav__link i{
+  font-size: 1.25rem;
+}
+
+.nav__link:hover{
+  color: var(--first-color);
+}
+
+.nav__actions{
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.nav__actions i{
+  font-size: 1.25rem;
+  color: var(--title-color);
+  cursor: pointer;
+  transition: color .4s;
+}
+
+.nav__actions i:hover{
+  color: var(--first-color);
+}
+
+/* Add shadow header */
+.shadow-header{
+  box-shadow: 0 2px 16px hsla(0, 0%, 0%, hsla(0, 0%, 0%, .1));
+}
+
+/* Active link */
+.active-link{
+  color: var(--first-color);
+}
+
+/*=============== SEARCH ===============*/
+.search{
+  position: fixed;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-fixed);
+  background-color: hsla(230, 12%, 96% .6);
+  backdrop-filter: blur(16px);
+  padding: 8rem 1.5rem;
+  transition: top .4s;
+}
+
+.search__form{
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+  background-color: var(--container-color);
+  border: 2px solid var(--border-color);
+  padding-inline: 1rem;
+}
+
+.search__icon{
+  font-size: 1.25rem;
+  color: var(--title-color);
+}
+
+.search__input{
+  width: 100%;
+  padding-block: 1rem;
+  background-color: var(--container-color);
+  color: var(--text-color);
+}
+
+.search__close{
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 2rem;
+  color: var(--title-color);
+  cursor: pointer;
+}
+
+.search__results{
+  margin-top: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.search__card{
+  position: relative;
+  background-color: var(--container-color);
+  padding: 1.5rem;
+  border: 2px solid var(--border-color);
+  text-align: center;
+  transition: transform .4s, border .4s, box-shadow .4s;
+  border-radius: 1rem;
+}
+
+.search__wishlist {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.25rem;
+  color: var(--first-color);
+  cursor: pointer;
+  transition: color .3s, transform .3s;
+}
+
+.search__wishlist:hover {
+  color: #ff4d4d;
+  transform: scale(1.2);
+}
+
+.search__card:hover{
+  border: 2px solid var(--first-color);
+  transform: translateY(-.5rem);
+  box-shadow: 0 12px 24px hsla(230, 62%, 56%, .2);
+}
+
+.search__img{
+  width: 120px;
+  margin: 0 auto 1rem;
+  border-radius: .5rem;
+  box-shadow: 0 4px 8px hsla(0, 0%, 0%, .1);
+}
+
+.search__title-book{
+  font-size: var(--h3-font-size);
+  margin-bottom: .25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.search__author{
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.search__buttons{
+  display: flex;
+  flex-direction: column;
+  row-gap: .5rem;
+}
+
+.search__button{
+  font-size: var(--smaller-font-size);
+  padding: .75rem 1rem;
+  width: 100%;
+}
+
+/*=============== BOOK DETAILS ===============*/
+.book__details-form{
+  max-width: 600px;
+  width: 90%;
+}
+
+.book__details-container{
+  grid-template-columns: 1fr;
+  row-gap: 1.5rem;
+  align-items: center;
+}
+
+.book__details-img{
+  width: 150px;
+  justify-self: center;
+  border-radius: .5rem;
+  box-shadow: 0 8px 16px hsla(0, 0%, 0%, .1);
+}
+
+.book__details-description{
+  font-size: var(--small-font-size);
+  margin-bottom: 1rem;
+  text-align: justify;
+  line-height: 1.6;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.book__details-info{
+  display: flex;
+  flex-direction: column;
+  row-gap: .5rem;
+  font-size: var(--smaller-font-size);
+  color: var(--title-color);
+  font-weight: var(--font-medium);
+  margin-bottom: 1.5rem;
+}
+
+@media screen and (min-width: 576px){
+  .book__details-container{
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2rem;
+  }
+  .book__details-img{
+    width: 200px;
+  }
+}
+
+/* Show search */
+.show-search{
+  top: 0;
+}
+
+/*=============== LOGIN ===============*/
+.login{
+  position: fixed;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-fixed);
+  background-color: hsla(230, 12%, 96%, .6);
+  backdrop-filter: blur(16px);
+  display: grid;
+  align-items: center;
+  padding: 1.5rem;
+  text-align: center;
+  transition: top .4s;
+  overflow-y: auto;
+}
+
+.login__form{
+  position: relative;
+  background-color: var(--container-color);
+  padding: 3rem 1.5rem 2.5rem;
+  border: 2px solid var(--border-color);
+  row-gap: 1.5rem;
+  max-width: 400px;
+  margin-inline: auto;
+}
+
+.login__title{
+  font-size: var(--h2-font-size);
+  margin-bottom: 1rem;
+}
+
+.login__group{
+  row-gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.login__label{
+  display: block;
+  text-align: initial;
+  color: var(--title-color);
+  font-weight: var(--font-medium);
+  margin-bottom: .5rem;
+}
+
+.login__input{
+  width: 100%;
+  background-color: var(--container-color);
+  border: 2px solid var(--border-color);
+  padding: 1rem;
+  color: var(--text-color);
+  transition: border .4s;
+}
+
+.login__input:focus{
+  border: 2px solid var(--first-color);
+  outline: none;
+}
+
+.login__signup,
+.login__forgot{
+  display: block;
+  font-size: var(--small-font-size);
+}
+
+.login__signup{
+  margin-bottom: .5rem;
+}
+
+.login__signup a{
+  color: var(--first-color);
+  font-weight: var(--font-medium);
+}
+
+.login__forgot{
+  color: var(--first-color);
+  margin-bottom: 1.25rem;
+}
+
+.login__button{
+  width: 100%;
+  cursor: pointer;
+}
+
+.login__close{
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  color: var(--title-color);
+  cursor: pointer;
+}
+
+/* Show login */
+.show-login{
+  top: 0;
+}
+
+/*=============== CART ===============*/
+.cart{
+  position: fixed;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-fixed);
+  background-color: hsla(230, 12%, 96%, .6);
+  backdrop-filter: blur(16px);
+  padding: 8rem 1.5rem 4rem;
+  transition: top .4s;
+  overflow-y: auto;
+}
+
+.cart__title{
+  font-size: var(--h2-font-size);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cart__container{
+  row-gap: 1.5rem;
+}
+
+.cart__card{
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
+  background-color: var(--container-color);
+  padding: 1rem;
+  border: 2px solid var(--border-color);
+  transition: border .4s, background-color .4s;
+}
+
+.cart__img{
+  width: 70px;
+}
+
+.cart__title-item{
+  font-size: var(--h3-font-size);
+  margin-bottom: .25rem;
+}
+
+.cart__price-item{
+  display: block;
+  color: var(--first-color);
+  font-weight: var(--font-medium);
+  margin-bottom: .5rem;
+}
+
+.cart__amount{
+  display: flex;
+  align-items: center;
+  column-gap: .5rem;
+}
+
+.cart__amount-content{
+  display: flex;
+  align-items: center;
+  column-gap: .75rem;
+}
+
+.cart__amount-box{
+  display: inline-flex;
+  padding: .25rem;
+  background-color: var(--body-color);
+  cursor: pointer;
+}
+
+.cart__amount-trash{
+  font-size: 1.15rem;
+  color: var(--first-color);
+  cursor: pointer;
+}
+
+.cart__prices{
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: .5rem;
+}
+
+.cart__prices-item,
+.cart__prices-total{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart__prices-total{
+  font-size: var(--h2-font-size);
+  font-weight: var(--font-semi-bold);
+  color: var(--title-color);
+}
+
+.cart__close{
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  font-size: 2rem;
+  color: var(--title-color);
+  cursor: pointer;
+}
+
+/* Show cart */
+.show-cart{
+  top: 0;
+}
+
+/*=============== HOME ===============*/
+.home__swiper{
+  margin: initial;
+}
+
+.home__container{
+  padding-top: 2rem;
+  row-gap: 2.5rem;
+}
+
+.home__data{
+  text-align: center;
+}
+
+.home__title{
+  font-size: var(--biggest-font-size);
+  margin-bottom: 1rem;
+}
+
+.home__description{
+  margin-bottom: 2rem;
+}
+
+.home__images{
+  display: grid;
+}
+
+.home__article,
+.home__img{
+  width: 220px;
+  transition: scale .4s;
+}
+
+.home__article{
+  scale: .8;
+}
+
+/* Swiper class */
+.swiper-slide-active,
+.swiper-slide-duplicate-active{
+  scale: 1;
+
+}
+
+/*=============== BUTTON ===============*/
+.button{
+  display: inline-block;
+  background-color: var(--first-color);
+  color: var(--white-color);
+  font-weight: var(--font-semi-bold);
+  padding: 1rem 1.5rem;
+  transition: box-shadow .4s;
+}
+
+.button:hover{
+  box-shadow: 0 4px 32px hsla(230, 72%, 32%, 4);
+}
+
+/*=============== SERVICES ===============*/
+.services__container{
+  row-gap: 3rem;
+}
+
+.services__card{
+  text-align: center;
+}
+
+.services__card i{
+  display: block;
+  font-size: 3rem;
+  color: var(--first-color);
+  margin-bottom: 1rem;
+}
+
+.services__title{
+  font-size: var(--h3-font-size);
+  margin-bottom: .5rem;
+}
+
+/*=============== FEATURED ===============*/
+.featured__card{
+  position: relative;
+  text-align: center;
+  background-color: var(--container-color);
+  padding: 2rem;
+  overflow: hidden;
+  border: 2px solid var(--border-color);
+  transition: border .4s, background-color .4s;
+}
+
+.featured__img{
+  width: 150px;
+  margin: 0 auto .75rem;
+}
+
+.featured__title{
+  font-size: var(--h2-font-size);
+  margin-bottom: .5rem;
+}
+
+.featured__prices{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: .75rem;
+  margin-bottom: 1.25rem;
+}
+
+.featured__discount{
+  color: var(--title-color);
+}
+
+.featured__price{
+  font-size: var(--small-font-size);
+  text-decoration: line-through;
+}
+
+.featured__card .button{
+  cursor: pointer;
+}
+
+.featured__actions{
+  display: inline-flex;
+  flex-direction: column;
+  row-gap: .75rem;
+  position: absolute;
+  top: 2rem;
+  right: -1.5rem;
+  transition: right .4s;
+}
+
+.featured__card:hover .featured__actions{
+  right: 1.5rem;
+}
+
+.featured__actions button{
+  background: none;
+  font-size: 1.25rem;
+  color: var(--first-color);
+  cursor: pointer;
+  transition: transform .3s, color .3s;
+}
+
+.featured__actions button:hover i {
+  color: #ff4d4d;
+  transform: scale(1.2);
+}
+
+/* Wishlist Hearts Styling */
+.ri-heart-3-line,
+.ri-heart-3-fill,
+.ri-heart-line {
+    cursor: pointer;
+    transition: transform .3s, color .3s;
+}
+
+.new__wishlist {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.25rem;
+    color: var(--first-color);
+    z-index: 5;
+    transition: color .3s, transform .3s;
+}
+
+.new__wishlist:hover {
+    color: #ff4d4d;
+    transform: scale(1.2);
+}
+
+.featured__card:hover{
+  border: 2px solid var(--first-color);
+  transform: translateY(-.5rem);
+  box-shadow: 0 12px 24px hsla(230, 62%, 56%, .2);
+}
+
+.featured__card{
+  transition: transform .4s, border .4s, box-shadow .4s, background-color .4s;
+  border-radius: 1rem;
+}
+
+.new__card{
+  transition: transform .4s, border .4s, box-shadow .4s, background-color .4s;
+  border-radius: 1rem;
+}
+
+.new__card:hover{
+  border: 2px solid var(--first-color);
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px hsla(230, 62%, 56%, .1);
+}
+
+/* Swiper class */
+.swiper-button-prev::after,
+.swiper-button-next::after{
+  content: '';
+}
+
+.swiper-button-prev,
+.swiper-button-next{
+  width: initial;
+  height: initial;
+  background-color: var(--container-color);
+  border: 2px solid var(--border-color);
+  padding: .5rem;
+  font-size: 1.5rem;
+  color: var(--first-color);
+  transition: border .4s background-color .4s;
+}
+
+/*=============== DISCOUNT ===============*/
+.discount__container{
+  row-gap: 3.5rem;
+}
+
+.discount__data{
+  text-align: center;
+}
+
+.discount__title{
+  margin-bottom: 1rem;
+}
+
+.discount__description{
+  margin-bottom: 2rem;
+}
+
+.discount__images{
+  display: flex;
+  justify-content: center;
+}
+
+.discount__img-1,
+.discount__img-2{
+  width: 170px;
+}
+
+.discount__img-1{
+  transform: translateX(1rem) rotate(-10deg);
+}
+
+.discount__img-2{
+  transform: translateX(-1rem) rotate(10deg);
+}
+/*=============== NEW ===============*/
+.new__card{
+  position: relative;
+  display: flex;
+  align-items: center;
+  column-gap: 2.5rem;
+  background-color: var(--container-color);
+  padding: 1.5rem 1rem;
+  color: var(--text-color);
+  border: 2px solid var(--border-color);
+  transition: border .4s, background-color .4s;
+}
+
+.new__card:hover{
+  border: 2px solid var(--text-color);
+}
+
+.new__img{
+  width: 100px;
+}
+
+.new__title{
+  font-size: var(--h2-font-size);
+  margin-bottom: .5rem;
+}
+
+.new__prices{
+  display: flex;
+  align-items: center;
+  column-gap: .75rem;
+  margin-bottom: .75rem;
+}
+
+.new__discount{
+  color: var(--title-color);
+}
+
+.new__price{
+  font-size: var(--small-font-size);
+  text-decoration: line-through;
+}
+
+.new__stars{
+  color: var(--first-color);
+}
+
+.new__swiper:nth-child(1){
+  margin-bottom: 2rem;
+}
+
+/*=============== JOIN ===============*/
+.join__container{
+  position: relative;
+  padding-block: 3rem;
+}
+
+.join__bg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.join__data{
+  position: relative;
+}
+
+.join__title{
+  color: var(--white-color);
+}
+
+.join__form{
+  display: grid;
+  row-gap: 1rem;
+}
+
+.join__input{
+  padding: 1.25rem 1rem;
+  background-color: var(--body-color);
+  color: var(--title-color);
+  transition: background-color .4s;
+}
+
+.join__input::placeholder{
+  color: var(--text-color);
+}
+
+.join__button{
+  padding-block: 1.25rem;
+  cursor: pointer;
+}
+
+/*=============== TESTIMONIAL ===============*/
+.testimonial__card{
+  text-align: center;
+  background-color: var(--container-color);
+  padding: 2rem 3rem 2.5rem;
+  border: 2px solid var(--border-color);
+  transition: border .4s, background-color .4s;
+}
+
+.testimonial__img{
+  width: 100px;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem;
+}
+
+.testimonial__title{
+  font-size: var(--h2-font-size);
+  margin-bottom: .75rem;
+}
+
+.testimonial__description{
+  font-size: var(--small-font-size);
+  margin-bottom: 1.25rem;
+}
+
+.testimonial__stars{
+  color: var(--first-color);
+}
+
+/*=============== REVIEWS ===============*/
+.reviews__container{
+  row-gap: 3.5rem;
+}
+
+.reviews__form{
+  background-color: var(--container-color);
+  padding: 2rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 1rem;
+  row-gap: 1.5rem;
+  max-width: 500px;
+  justify-self: center;
+  width: 100%;
+}
+
+.reviews__title{
+  font-size: var(--h3-font-size);
+  text-align: center;
+}
+
+.reviews__group{
+  row-gap: 1rem;
+}
+
+.reviews__input{
+  width: 100%;
+  background-color: var(--body-color);
+  border: 2px solid var(--border-color);
+  padding: 1rem;
+  color: var(--text-color);
+  border-radius: .5rem;
+  transition: border .4s;
+}
+
+.reviews__input:focus{
+  border: 2px solid var(--first-color);
+  outline: none;
+}
+
+.reviews__textarea{
+  height: 150px;
+  resize: none;
+}
+
+.reviews__list{
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+@media screen and (max-width: 350px) {
+  .reviews__list {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reviews__card{
+  background-color: var(--container-color);
+  padding: 1.5rem;
+  border: 2px solid var(--border-color);
+  border-radius: 1rem;
+  transition: transform .4s, box-shadow .4s;
+}
+
+.reviews__card:hover{
+  transform: translateY(-.25rem);
+  box-shadow: 0 8px 16px hsla(0, 0%, 0%, .1);
+}
+
+.reviews__user{
+  display: block;
+  font-size: var(--h3-font-size);
+  font-weight: var(--font-medium);
+  color: var(--title-color);
+  margin-bottom: .5rem;
+}
+
+.reviews__text{
+  font-size: var(--small-font-size);
+  line-height: 1.6;
+  margin-bottom: .75rem;
+}
+
+.reviews__date{
+  font-size: var(--smaller-font-size);
+  color: var(--text-color);
+}
+
+/*=============== FOOTER ===============*/
+.footer{
+  padding-block: 4rem 6rem;
+}
+
+.footer__container{
+  row-gap: 3rem;
+}
+
+.footer__logo{
+  display: inline-flex;
+  align-items: center;
+  column-gap: .5rem;
+  color: var(--first-color);
+  font-size: var(--h3-font-size);
+  font-family: var(--second-font);
+  margin-bottom: 1.25rem;
+}
+
+.footer__logo i{
+  font-size: 1.25rem;
+}
+
+.footer__data{
+  grid-template-columns: repeat(2, max-content);
+  gap: 3rem 2rem;
+}
+
+.footer__title{
+  font-size: var(--h3-font-size);
+  margin-bottom: 1.25rem;
+}
+
+.footer__links{
+  display: grid;
+  row-gap: .5rem;
+}
+
+.footer__link{
+  color: var(--text-color);
+  transition: color .4s;
+}
+
+.footer__link:hover{
+  color: var(--first-color);
+}
+
+.footer__info{
+  font-style: normal;
+}
+
+.footer__social{
+  display: flex;
+  column-gap: 1.25rem;
+}
+
+.footer__social-link{
+  font-size: 1.25rem;
+  color: var(--first-color);
+}
+
+.footer__copy{
+  display: block;
+  margin-top: 5rem;
+  text-align: center;
+  font-size: var(--small-font-size);
+}
+
+/*=============== SCROLL BAR ===============*/
+::-webkit-scrollbar{
+  width: .6rem;
+  border-radius: .5rem;
+  background-color: hsl(230, 16%, 85%);
+}
+
+::-webkit-scrollbar-thumb{
+  border-radius: .5rem;
+  background-color: hsl(230, 16%, 65%);
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background-color: hsl(230, 16%, 55%);
+}
+
+/*=============== SCROLL UP ===============*/
+.scrollup{
+  position: fixed;
+  right: 1rem;
+  bottom: -50%;
+  background-color: var(--container-color);
+  box-shadow: 0 2px 8px hsla(0, 0%, 0%, .1);
+  display: inline-flex;
+  padding: 6px;
+  font-size: 1.25rem;
+  color: var(--title-color);
+  z-index: var(--z-tooltip);
+  transition: bottom .4s, transform .4s, background-color .4s;
+}
+
+.scrollup:hover{
+  transform: translate(1.5rem);
+}
+
+/* Show Scroll Up */
+.show-scroll{
+  bottom: 6rem;
+}
+
+/* Profile Modal Styles */
+.profile__data {
+  text-align: center;
+  row-gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile__img-container {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 4px solid var(--first-color);
+  box-shadow: 0 4px 12px hsla(230, 62%, 15%, 0.15);
+}
+
+.profile__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile__info {
+  display: grid;
+  row-gap: .5rem;
+}
+
+.profile__label {
+  font-size: var(--smaller-font-size);
+  color: var(--text-color-light);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.profile__name {
+  font-size: var(--h3-font-size);
+  color: var(--title-color);
+}
+
+.profile__email {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+}
+
+#logout-button {
+  background-color: #ff4d4d;
+}
+
+#logout-button:hover {
+  background-color: #e60000;
+}
+
+/* Hide login button when profile is shown */
+.hide-login {
+  display: none !important;
+}
+
+/*==================== RESPONSIVE MEDIA QUERIES ====================*/
+/*==================== EXTRA SMALL DEVICES (320px and below) ====================*/
+/* Adjustments for very small mobile devices */
+@media screen and (max-width: 320px) {
+  /* Reduce container padding on tiny screens */
+  .container {
+    margin-inline: 1rem; /* Minimal side margins */
+  }
+
+  /* Adjust navigation menu spacing */
+  .nav__menu {
+    padding-inline: 3rem; /* Smaller padding for compact navigation */
+  }
+
+  /* Smaller discount images on small screens */
+  .discount__img-1,
+  .discount__img-2 {
+    width: 140px; /* Reduce image size */
+  }
+
+  /* Stack new book cards vertically on small screens */
+  .new__card {
+    flex-direction: column; /* Vertical layout */
+  }
+
+  /* Reduce testimonial card padding */
+  .testimonial__card {
+    padding-inline: 1rem; /* Less horizontal padding */
+  }
+
+  /* Single column footer on small screens */
+  .footer__data {
+    grid-template-columns: 1fr; /* Full width columns */
+    row-gap: 2rem; /* Spacing between sections */
+  }
+
+  /* Adjust search results grid for tiny screens */
+  .search__results {
+    grid-template-columns: 1fr; /* Single column */
+    padding: 0.5rem; /* Reduced padding */
+  }
+
+  /* Smaller featured cards */
+  .featured__card {
+    padding: 1.5rem; /* Reduced padding */
+  }
+
+  /* Smaller cart items */
+  .cart__img {
+    width: 60px; /* Smaller cart images */
+  }
+}
+
+/*==================== MEDIUM DEVICES (450px and above) ====================*/
+/* Styles for small tablets and large phones in landscape */
+@media screen and (min-width: 450px) {
+  /* Wider featured cards on medium screens */
+  .featured__card {
+    width: 290px; /* Fixed width for consistency */
+  }
+
+  /* Wider new book cards */
+  .new__card {
+    width: 390px; /* Comfortable reading width */
+  }
+
+  /* Wider testimonial cards */
+  .testimonial__card {
+    width: 320px; /* Optimal width for testimonials */
+  }
+
+  /* Better search results layout */
+  .search__results {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+  }
+
+  /* Improved cart layout */
+  .cart__card {
+    padding: 1.25rem; /* More breathing room */
+  }
+}
+
+/*==================== TABLETS (576px and above) ====================*/
+/* Styles for tablets and larger mobile devices */
+@media screen and (min-width: 576px) {
+  /* Centered and constrained search form */
+  .search__form {
+    width: 500px; /* Fixed width */
+    max-width: 90%; /* Responsive maximum */
+    margin-inline: auto; /* Center horizontally */
+  }
+
+  /* Centered login forms */
+  .login__form {
+    width: 400px; /* Fixed width for forms */
+    justify-self: center; /* Center in grid */
+  }
+
+  /* Profile layout with image and info side by side */
+  .profile__data {
+    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+    align-items: center; /* Vertical centering */
+    text-align: initial; /* Left-align text */
+    column-gap: 2rem; /* Space between columns */
+  }
+
+  /* Better positioned close buttons for modals */
+  .search__close,
+  .login__close {
+    width: max-content; /* Button only as wide as icon */
+    top: 2rem; /* Consistent top position */
+    right: 2rem; /* Consistent right position */
+    left: initial; /* Remove left positioning */
+    margin-inline: initial; /* Remove inline margins */
+  }
+
+  /* Centered navigation menu at medium size */
+  .nav__menu {
+    width: 380px; /* Fixed width */
+    margin-inline: auto; /* Center menu */
+  }
+
+  /* Centered home and discount sections */
+  .home__container,
+  .discount__container {
+    grid-template-columns: 420px; /* Fixed column width */
+    justify-content: center; /* Center content */
+  }
+
+  /* Centered join form */
+  .join__form {
+    width: 328px; /* Fixed width */
+    justify-self: center; /* Center in grid */
+  }
+
+  /* Three-column footer on tablets */
+  .footer__data {
+    grid-template-columns: repeat(3, max-content); /* Three columns */
+  }
+
+  /* Better search results grid on tablets */
+  .search__results {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Responsive columns */
+  }
+
+  /* Larger book details modal */
+  .book__details-form {
+    max-width: 600px; /* Wider modal */
+  }
+}
+
+/*==================== SMALL DESKTOPS (768px and above) ====================*/
+/* Styles for small desktop screens and large tablets */
+@media screen and (min-width: 768px) {
+  /* Wider home container */
+  .home__container {
+    grid-template-columns: 580px; /* Single centered column */
+  }
+
+  /* Centered and constrained home content */
+  .home__data {
+    width: 420px; /* Fixed width */
+    justify-self: center; /* Center in container */
+  }
+
+  /* Three-column services layout */
+  .services__container {
+    grid-template-columns: repeat(3, max-content); /* Three equal columns */
+    justify-content: center; /* Center all cards */
+    column-gap: 5rem; /* Space between cards */
+  }
+
+  /* Two-column footer with space between */
+  .footer__container {
+    grid-template-columns: repeat(2, max-content); /* Two columns */
+    justify-content: space-between; /* Push to edges */
+  }
+
+  /* Better search results grid */
+  .search__results {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Larger cards */
+    gap: 2rem; /* More spacing */
+  }
+
+  /* Larger new book cards */
+  .new__card {
+    padding: 1.25rem; /* More padding */
+  }
+
+  /* Better cart layout */
+  .cart__card {
+    column-gap: 1.5rem; /* More space between image and content */
+  }
+}
+/*==================== LARGE DEVICES / DESKTOPS (1150px and above) ====================*/
+/* Styles optimized for desktop screens */
+@media screen and (min-width: 1150px) {
+  /* Increase section spacing on desktop */
+  .section {
+    padding-block: 7rem 2rem; /* More vertical space for breathing room */
+  }
+
+  /* Taller navigation bar on desktop */
+  .nav {
+    height: calc(var(--header-height) + 2rem); /* Increased height */
+    column-gap: 4rem; /* More space between nav elements */
+  }
+
+  /* Hide mobile icons in navigation */
+  .nav__link i {
+    display: none; /* Icons not needed on desktop */
+  }
+
+  /* Show text labels in navigation */
+  .nav__link span {
+    display: block; /* Show full text navigation */
+  }
+
+  /* Full-width navigation menu */
+  .nav__menu {
+    width: initial; /* Remove fixed width */
+    margin-inline: auto 0; /* Push to right side */
+  }
+
+  /* Horizontal spacing for nav items */
+  .nav__list {
+    column-gap: 4rem; /* Space between menu items */
+  }
+
+  /* Emphasize nav links on desktop */
+  .nav__link {
+    font-weight: var(--font-medium); /* Medium weight for clarity */
+  }
+
+  /* Remove shadow from dark theme nav */
+  .dark-theme .nav__menu {
+    box-shadow: none; /* No shadow needed on desktop */
+  }
+
+  /* Full-width home content on desktop */
+  .home__data {
+    width: initial; /* Remove width constraint */
+  }
+
+  /* More spacing in services section */
+  .services__container {
+    column-gap: 10rem; /* Large gap between service cards */
+  }
+
+  /* Larger service icons */
+  .services__card i {
+    font-size: 3.5rem; /* Bigger icons for emphasis */
+  }
+
+  /* Add top padding to featured section */
+  .featured__container {
+    padding-top: 2rem; /* Space from previous section */
+  }
+
+  /* Smaller featured title on desktop */
+  .featured__title {
+    font-size: var(--h3-font-size); /* Reduce title size */
+  }
+
+  /* Two-column discount section layout */
+  .discount__container {
+    grid-template-columns: 615px 500px; /* Fixed column widths */
+    justify-content: space-between; /* Space between columns */
+    align-items: center; /* Vertical centering */
+  }
+
+  /* More bottom margin for discount description */
+  .discount__description {
+    margin-bottom: 3.5rem; /* Extra space before button */
+  }
+
+  /* Larger discount images on desktop */
+  .discount__img-1,
+  .discount__img-2 {
+    width: 300px; /* Bigger promotional images */
+  }
+
+  /* Reorder discount content (text first on desktop) */
+  .discount__data {
+    order: 1; /* Text appears first */
+  }
+
+  /* Left-align discount text on desktop */
+  .discount__data,
+  .discount__title {
+    text-align: initial; /* Left alignment */
+  }
+
+  /* Top padding for new books section */
+  .new__container {
+    padding-top: 2rem; /* Space from previous section */
+  }
+
+  /* More padding in new book cards */
+  .new__card {
+    padding: 1.5rem; /* Comfortable spacing */
+  }
+
+  /* Larger book images in new section */
+  .new__img {
+    width: 120px; /* Bigger book covers */
+  }
+
+  /* Smaller new book titles */
+  .new__title {
+    font-size: var(--h3-font-size); /* Reduce title size */
+  }
+
+  /* Adjust join background position on desktop */
+  .join__bg {
+    object-position: 0 -5rem; /* Shift image up slightly */
+  }
+
+  /* Top padding for testimonials */
+  .testimonial__container {
+    padding-top: 2rem; /* Space from previous section */
+  }
+
+  /* More padding in testimonial cards */
+  .testimonial__card {
+    padding-inline: 2rem; /* Horizontal padding */
+  }
+
+  /* Smaller testimonial titles */
+  .testimonial__title {
+    font-size: var(--h3-font-size); /* Reduce title size */
+  }
+
+  /* Larger testimonial text */
+  .testimonial__description {
+    font-size: var(--normal-font-size); /* Increase readability */
+  }
+
+  /* Increased footer spacing on desktop */
+  .footer {
+    padding-block: 6rem 3rem; /* More vertical space */
+  }
+
+  /* Four-column footer layout */
+  .footer__data {
+    grid-template-columns: repeat(4, max-content); /* Four columns */
+    column-gap: 4.5rem; /* Space between columns */
+  }
+
+  /* Larger footer logo and titles */
+  .footer__logo,
+  .footer__title {
+    font-size: var(--h2-font-size); /* Increase size */
+    margin-bottom: 1.5rem; /* More space below */
+  }
+
+  /* More spacing in footer links */
+  .footer__links {
+    row-gap: 1rem; /* Space between links */
+  }
+
+  /* More spacing for social icons */
+  .footer__social {
+    column-gap: 1.5rem; /* Space between icons */
+  }
+
+  /* Larger social icons */
+  .footer__social-link {
+    font-size: 1.5rem; /* Bigger icons */
+  }
+
+  /* More space above copyright text */
+  .footer__copy {
+    margin-top: 7.5rem; /* Large gap from footer content */
+  }
+
+  /* Position scroll-up button further from edge */
+  .scrollup {
+    right: 3rem; /* More space from right edge */
+  }
+
+  /* Show scroll-up button higher on desktop */
+  .show-scroll {
+    bottom: 3rem; /* Higher position from bottom */
+  }
+
+  /* Better search results grid on desktop */
+  .search__results {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Larger cards */
+    gap: 2.5rem; /* More spacing */
+  }
+}
+
+/*==================== EXTRA LARGE DESKTOPS (1220px and above) ====================*/
+/* Styles optimized for large desktop screens and wide monitors */
+@media screen and (min-width: 1220px) {
+  /* Auto margins for centered max-width container */
+  .container {
+    margin-inline: auto; /* Center container on large screens */
+  }
+
+  /* Two-column home layout with sidebar */
+  .home__container {
+    grid-template-columns: 435px 745px; /* Sidebar and main content */
+    align-items: center; /* Vertical centering */
+    padding-block: 7rem 2rem; /* Generous vertical spacing */
+  }
+
+  /* Left-aligned home text on large screens */
+  .home__data {
+    text-align: initial; /* Left alignment for better readability */
+  }
+
+  /* Extra margin below home description */
+  .home__description {
+    margin-bottom: 4rem; /* More space before CTA button */
+  }
+
+  /* Larger home book images */
+  .home__article,
+  .home__img {
+    width: 290px; /* Bigger book showcases */
+  }
+
+  /* Better search results on large screens */
+  .search__results {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Larger cards */
+    gap: 3rem; /* Maximum spacing */
+    max-height: 75vh; /* More vertical space */
+  }
+
+  /* Larger modals on big screens */
+  .login__form,
+  .book__details-form {
+    max-width: 500px; /* Wider forms */
+    padding: 3.5rem 2rem; /* More padding */
+  }
+
+  /* Better cart layout */
+  .cart {
+    padding: 8rem 3rem 4rem; /* More horizontal padding */
+  }
+
+  /* Wider cart cards */
+  .cart__card {
+    padding: 1.5rem; /* More comfortable spacing */
+  }
+}
+
+/*==================== ULTRA WIDE SCREENS (1440px and above) ====================*/
+/* Additional enhancements for ultra-wide monitors */
+@media screen and (min-width: 1440px) {
+  /* Larger hero text on ultra-wide screens */
+  :root {
+    --biggest-font-size: 4rem; /* Extra large hero text */
+  }
+
+  /* Even wider home layout */
+  .home__container {
+    grid-template-columns: 500px 900px; /* More space for content */
+    column-gap: 4rem; /* Space between columns */
+  }
+
+  /* Extra large book images */
+  .home__article,
+  .home__img {
+    width: 320px; /* Maximum showcase size */
+  }
+
+  /* Five-column search results on ultra-wide */
+  .search__results {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Large cards */
+  }
+
+  /* Maximum container width on ultra-wide */
+  .container {
+    max-width: 1400px; /* Prevent excessive width */
+  }
+}
+
+/*==================== RESPONSIVE ENHANCEMENTS FOR ALL BREAKPOINTS ====================*/
+/* Additional responsive improvements that apply across multiple breakpoints */
+
+/* Ensure images never cause horizontal scroll */
+img {
+  max-width: 100%; /* Never exceed container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Responsive typography for readability */
+@media screen and (max-width: 768px) {
+  /* Smaller line height on mobile for tighter layout */
+  body {
+    line-height: 1.5; /* Comfortable line spacing */
+  }
+  
+  /* Adjust section padding on mobile */
+  .section {
+    padding-block: 4rem 1rem; /* Less vertical space */
+  }
+}
+
+/* Touch-friendly buttons on mobile and tablet */
+@media screen and (max-width: 1024px) {
+  /* Larger tap targets for mobile */
+  .button {
+    padding: 1.125rem 1.75rem; /* Bigger buttons */
+    font-size: .9375rem; /* Slightly larger text */
+  }
+  
+  /* Larger icon buttons */
+  .nav__actions i {
+    font-size: 1.5rem; /* Bigger tap targets */
+  }
+  
+  /* More spacing for mobile menu items */
+  .nav__list {
+    justify-content: space-between; /* Even distribution */
+    padding-inline: 0.5rem; /* Prevent edge crowding */
+  }
+}
+
+/* Landscape orientation optimizations for mobile */
+@media screen and (max-height: 600px) and (orientation: landscape) {
+  /* Reduce vertical spacing in landscape */
+  .section {
+    padding-block: 3rem 1rem; /* Compact spacing */
+  }
+  
+  /* Smaller loader in landscape */
+  .loader__book {
+    width: 50px; /* Reduce size */
+    height: 35px; /* Reduce height */
+  }
+  
+  /* Compact modals in landscape */
+  .login__form {
+    padding: 2rem 1.5rem; /* Less padding */
+  }
+  
+  /* Reduce modal heights */
+  .search,
+  .login,
+  .cart {
+    padding: 4rem 1.5rem 2rem; /* Compact vertical padding */
+  }
+}
+
+/*==================== PRINT STYLES ====================*/
+/* Optimize layout for printing */
+@media print {
+  /* Hide unnecessary elements when printing */
+  .header,
+  .nav,
+  .nav__menu,
+  .nav__actions,
+  .loader,
+  .search,
+  .login,
+  .cart,
+  .scrollup,
+  .footer__social {
+    display: none; /* Don't print interactive elements */
+  }
+  
+  /* Expand sections for printing */
+  .section {
+    padding-block: 2rem 1rem; /* Compact spacing */
+  }
+  
+  /* Remove background for clean printing */
+  body {
+    background: white; /* Plain white background */
+    color: black; /* Black text for clarity */
+  }
+  
+  /* Ensure links are visible */
+  a {
+    text-decoration: underline; /* Show link underlines */
+    color: black; /* Black links */
+  }
+}
